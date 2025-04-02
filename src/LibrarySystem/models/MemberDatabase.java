@@ -4,28 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDatabase {
-    private List<Reader> readers;
+    private List<MemberRecord> members;
 
 
     public MemberDatabase() {
-        this.readers = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
-    public void addReader(Reader reader) {
-        readers.add(reader);
-        System.out.println("Üye veri tabanına okuyucu eklendi: " + reader.getName());
+    public void addMember(MemberRecord member) {
+        members.add(member);
+        System.out.println("Üye veri tabanına üye eklendi: " + member.getName() + " (ID: " + member.getMemberId() + ")");
     }
 
-    public Reader searchReaderByName(String name) {
-        for (Reader reader : readers) {
-            if (reader.getName().equalsIgnoreCase(name)) {
-                return reader;
+    public MemberRecord searchMemberByName(String name) {
+        for (MemberRecord member : members) {
+            if (member.getName().equalsIgnoreCase(name)) {
+                return member;
             }
         }
         return null;
     }
 
-    public List<Reader> getAllReaders() {
-        return new ArrayList<>(readers); // Kopyayı döndürerek dışarıdan değişiklik yapılmasını engelle
+    public MemberRecord searchMemberById(int memberId) {
+        for (MemberRecord member : members) {
+            if (member.getMemberId() == memberId) {
+                return member;
+            }
+        }
+        return null;
     }
+
+    public List<MemberRecord> getAllMembers() {
+        return new ArrayList<>(members); // Kopyayı döndürerek dışarıdan değişiklik yapılmasını engelle
+    }
+
 }

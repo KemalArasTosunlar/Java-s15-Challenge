@@ -1,20 +1,16 @@
 package LibrarySystem.models;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Reader extends Person {
     private List<Book> borrowedBooks;
     private List<Book> ownedBooks;
-    private int bookLimit; // Kitap ödünç alma limiti
-    private int booksBorrowedCount; // Şu anda ödünç aldığı kitap sayısı
-
 
     public Reader(String name) {
         super(name);
         this.borrowedBooks = new ArrayList<>();
         this.ownedBooks = new ArrayList<>();
-        this.bookLimit = 5; // Varsayılan limit 5 olarak ayarlandı
-        this.booksBorrowedCount = 0;
     }
 
     @Override
@@ -29,22 +25,11 @@ public class Reader extends Person {
     }
 
     public void borrowBook(Book book) {
-        if (booksBorrowedCount < bookLimit) {
-            this.borrowedBooks.add(book);
-            this.booksBorrowedCount++;
-            System.out.println(name + " borrowed the book: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
-        } else {
-            System.out.println(name + " has reached the borrowing limit (" + bookLimit + " books). Cannot borrow more books.");
-        }
+        this.borrowedBooks.add(book);
     }
 
     public void returnBook(Book book) {
-        if (this.borrowedBooks.remove(book)) {
-            this.booksBorrowedCount--;
-            System.out.println(name + " returned the book: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
-        } else {
-            System.out.println(name + " did not borrow this book: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
-        }
+        this.borrowedBooks.remove(book);
     }
 
     public boolean hasBorrowedBook(Book book) {
@@ -63,20 +48,8 @@ public class Reader extends Person {
         return ownedBooks;
     }
 
-    public int getBookLimit() {
-        return bookLimit;
-    }
-
-    public void setBookLimit(int bookLimit) {
-        this.bookLimit = bookLimit;
-    }
-
-    public int getBooksBorrowedCount() {
-        return booksBorrowedCount;
-    }
-
     public void displayBorrowedBooks() {
-        System.out.println(name + "'s Borrowed Books (" + booksBorrowedCount + "/" + bookLimit + "):");
+        System.out.println(name + "'s Borrowed Books:");
         if (borrowedBooks.isEmpty()) {
             System.out.println("No books borrowed yet.");
             return;

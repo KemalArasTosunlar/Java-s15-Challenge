@@ -7,42 +7,45 @@ public class LibrarySystem {
         Library library = new Library();
         Librarian librarian = new Librarian("Alice", "securePass");
         Reader reader = new Reader("Bob");
-        Author author = new Author("John Doe");
 
+        // Üye kaydı oluşturuluyor
+        MemberRecord member = new MemberRecord(reader, "General", "123 Main St", "555-1234", 3);
 
-        Book book1 = new Book("Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
-        Book book2 = new Book("Python Basics", "Jane Smith", 19.99, "Available", "2nd Edition", "2022-05-15");
-        Book book3 = new Book("Data Structures in Java", "John Doe", 39.99, "Available", "3rd Edition", "2023-03-20"); // Aynı yazardan bir kitap daha
-        Book book4 = new Book("Algorithms", "Thomas H. Cormen", 49.99, "Available", "4th Edition", "2022-11-01");
-        Book book6 = new Book("Refactoring", "Martin Fowler", 42.50, "Available", "2nd Edition", "2023-09-01"); // book6 tanımlandı
+        library.addMember(member); // Üye kütüphaneye ekleniyor
 
+        Book book1 = new Book("The Lord of the Rings", "J.R.R. Tolkien", 30.00, "Available", "1st", "2020-01-15");
+        Book book2 = new Book("The Hobbit", "J.R.R. Tolkien", 25.00, "Available", "1st", "2018-05-20");
+        Book book3 = new Book("The Silmarillion", "J.R.R. Tolkien", 35.00, "Available", "1st", "2022-11-10");
         library.addBook(book1);
         library.addBook(book2);
         library.addBook(book3);
-        library.addBook(book4);
-        library.addBook(book6); // book6 kütüphaneye eklendi
-        library.addReader(reader);
 
-        System.out.println("\nAttempting to borrow multiple books:");
+        System.out.println("\nAttempting to borrow books:");
         librarian.issueBook(reader, book1, library);
         librarian.issueBook(reader, book2, library);
         librarian.issueBook(reader, book3, library);
-        librarian.issueBook(reader, book4, library);
-
 
         System.out.println("\nReader's borrowed books:");
         reader.displayBorrowedBooks();
 
-        System.out.println("\nReturning one book:");
+        System.out.println("\nAttempting to return a book:");
         librarian.returnBook(reader, book1, library);
 
         System.out.println("\nReader's borrowed books after return:");
         reader.displayBorrowedBooks();
 
-        System.out.println("\nAttempting to borrow one more book after returning:");
-        librarian.issueBook(reader, book6, library);
+        System.out.println("\nLibrary books after return:");
+        library.displayBooks();
 
-        System.out.println("\nReader's borrowed books after second attempt:");
+        System.out.println("\nAttempting to borrow a fourth book:");
+        Book book4 = new Book("The Fellowship of the Ring", "J.R.R. Tolkien", 40.00, "Available", "1st", "1954-07-29");
+        library.addBook(book4);
+        librarian.issueBook(reader, book4, library); // Limit aşılmaya çalışılıyor
+
+        System.out.println("\nReader's borrowed books after attempting to exceed limit:");
         reader.displayBorrowedBooks();
+
+        System.out.println("\nLibrary books after attempting to exceed limit:");
+        library.displayBooks();
     }
 }
