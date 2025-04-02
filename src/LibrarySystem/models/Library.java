@@ -49,7 +49,7 @@ public class Library {
     }
 
     // Belirli bir kitabın mevcut olup olmadığını kontrol et (aynı kalır)
-    private boolean isBookAvailable(Book book) {
+    public boolean isBookAvailable(Book book) {
         return this.catalog.searchBookById(book.getBookID()) != null && !borrowedBooks.containsKey(book);
     }
 
