@@ -12,53 +12,41 @@ public class LibrarySystem {
 
         Book book1 = new Book("Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
         Book book2 = new Book("Python Basics", "Jane Smith", 19.99, "Available", "2nd Edition", "2022-05-15");
-        book1.setCategory("Programming");
-        book2.setCategory("Programming");
+        Book book3 = new Book("Data Structures in Java", "John Smith", 39.99, "Available", "3rd Edition", "2023-03-20");
+        Book book4 = new Book("Algorithms", "Thomas H. Cormen", 49.99, "Available", "4th Edition", "2022-11-01");
+        Book book5 = new Book("Clean Code", "Robert C. Martin", 34.99, "Available", "1st Edition", "2021-07-15");
+        Book book6 = new Book("Refactoring", "Martin Fowler", 42.50, "Available", "2nd Edition", "2023-09-01");
 
-        author.addBook(book1);
         library.addBook(book1);
         library.addBook(book2);
+        library.addBook(book3);
+        library.addBook(book4);
+        library.addBook(book5);
+        library.addBook(book6);
         library.addReader(reader);
 
-        // Kitap Arama Testleri (aynı kalır)
-        System.out.println("\nSearching for 'Java Programming' by title:");
-        Book foundBookByTitle = library.searchBookByTitle("Java Programming");
-        if (foundBookByTitle != null) {
-            foundBookByTitle.display();
-        } else {
-            System.out.println("Book not found!");
-        }
+        System.out.println("\nAttempting to borrow multiple books:");
+        librarian.issueBook(reader, book1, library);
+        librarian.issueBook(reader, book2, library);
+        librarian.issueBook(reader, book3, library);
+        librarian.issueBook(reader, book4, library);
+        librarian.issueBook(reader, book5, library);
+        librarian.issueBook(reader, book6, library); // Limit aşılmaya çalışılıyor
 
-        System.out.println("\nSearching for book with ID: " + book1.getBookID() + " by ID:");
-        Book foundBookById = library.searchBookById(book1.getBookID());
-        if (foundBookById != null) {
-            foundBookById.display();
-        } else {
-            System.out.println("Book not found!");
-        }
+        System.out.println("\nReader's borrowed books:");
+        reader.displayBorrowedBooks();
 
-        // Kitap Güncelleme Testi (kategori de güncelleniyor)
-        System.out.println("\nUpdating book with ID: " + book1.getBookID());
-        library.updateBook(book1.getBookID(), "2nd Edition", "2023-05-10", "Advanced Programming");
+        System.out.println("\nReturning one book:");
+        librarian.returnBook(reader, book1, library);
 
-        Book updatedBook = library.searchBookById(book1.getBookID());
-        if (updatedBook != null) {
-            updatedBook.display();
-        }
+        System.out.println("\nReader's borrowed books after return:");
+        reader.displayBorrowedBooks();
 
-        // Kategoriye göre kitap listeleme
-        System.out.println("\nBooks in 'Programming' category:");
-        library.listBooksByCategory("Programming");
+        System.out.println("\nAttempting to borrow one more book after returning:");
+        librarian.issueBook(reader, book6, library);
 
-        System.out.println("\nBooks in 'Advanced Programming' category:");
-        library.listBooksByCategory("Advanced Programming");
-
-        // Kitap Silme Testi (aynı kalır)
-        System.out.println("\nDeleting book with ID: " + book2.getBookID());
-        library.deleteBook(book2.getBookID());
-
-        System.out.println("\nLibrary Books After Deletion:");
-        library.displayBooks();
+        System.out.println("\nReader's borrowed books after second attempt:");
+        reader.displayBorrowedBooks();
     }
 
 }
