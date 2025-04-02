@@ -1,4 +1,6 @@
 package LibrarySystem.models;
+import LibrarySystem.models.Book;
+import LibrarySystem.models.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,15 @@ public class Reader extends Person {
         this.books = new ArrayList<>();
     }
 
+    @Override
+    public void whoYouAre() {
+
+    }
+
     public void purchaseBook(Book book) {
         books.add(book);
         book.changeOwner(this.name);
+        System.out.println(name + " purchased the book: " + book.getTitle());
     }
 
     public void borrowBook(Book book) {
@@ -24,7 +32,15 @@ public class Reader extends Person {
         books.remove(book);
     }
 
-    public void whoYouAre() {
-        System.out.println("I am a Reader: " + name);
+    public boolean hasBook(Book book) {
+        return books.contains(book);
+    }
+
+    // Yeni Özellik: Okuyucunun kitaplarını listeleme
+    public void displayBooks() {
+        System.out.println(name + "'s Books:");
+        for (Book book : books) {
+            book.display();
+        }
     }
 }
