@@ -2,7 +2,6 @@ package LibrarySystem.main;
 
 import LibrarySystem.models.*;
 
-
 public class LibrarySystem {
     public static void main(String[] args) {
         Library library = new Library();
@@ -10,8 +9,11 @@ public class LibrarySystem {
         Reader reader = new Reader("Bob");
         Author author = new Author("John Doe");
 
+
         Book book1 = new Book(1, "Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
         Book book2 = new Book(2, "Python Basics", "Jane Smith", 19.99, "Available", "2nd Edition", "2022-05-15");
+        book1.setCategory("Programming");
+        book2.setCategory("Programming");
 
         author.addBook(book1);
         library.addBook(book1);
@@ -28,18 +30,18 @@ public class LibrarySystem {
         }
 
         // Okuyucu kitap ödünç alıyor
-        librarian.issueBook(reader, book1);
+        librarian.issueBook(reader, book1, library); // Library nesnesini de geçiyoruz
 
         // Okuyucunun kitaplarını listeleme
         System.out.println("\nReader's Books After Borrowing:");
-        reader.displayBooks();
+        reader.displayBorrowedBooks(); // displayBooks yerine displayBorrowedBooks kullanacağız
 
         // Kütüphanedeki kitapları listeleme
         System.out.println("\nLibrary Books After Lending:");
         library.displayBooks();
 
         // Okuyucu kitabı iade ediyor
-        librarian.returnBook(reader, book1);
+        librarian.returnBook(reader, book1, library); // Library nesnesini de geçiyoruz
 
         // Kütüphanedeki kitapları tekrar listeleme
         System.out.println("\nLibrary Books After Returning:");
@@ -50,6 +52,7 @@ public class LibrarySystem {
 
         // Okuyucunun kitaplarını tekrar listeleme
         System.out.println("\nReader's Books After Purchasing:");
-        reader.displayBooks();
+        reader.displayOwnedBooks(); // displayBooks yerine displayOwnedBooks kullanacağız
     }
+
 }

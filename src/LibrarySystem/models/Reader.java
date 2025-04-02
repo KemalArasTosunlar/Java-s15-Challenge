@@ -1,45 +1,63 @@
 package LibrarySystem.models;
-import LibrarySystem.models.Book;
-import LibrarySystem.models.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Reader extends Person {
-    private List<Book> books;
+    private List<Book> borrowedBooks;
+    private List<Book> ownedBooks;
+
 
     public Reader(String name) {
         super(name);
-        this.books = new ArrayList<>();
+        this.borrowedBooks = new ArrayList<>();
+        this.ownedBooks = new ArrayList<>();
     }
 
     @Override
     public void whoYouAre() {
-
+        System.out.println("I am a Reader: " + name);
     }
 
     public void purchaseBook(Book book) {
-        books.add(book);
+        this.ownedBooks.add(book);
         book.changeOwner(this.name);
         System.out.println(name + " purchased the book: " + book.getTitle());
     }
 
     public void borrowBook(Book book) {
-        books.add(book);
+        this.borrowedBooks.add(book);
     }
 
     public void returnBook(Book book) {
-        books.remove(book);
+        this.borrowedBooks.remove(book);
     }
 
-    public boolean hasBook(Book book) {
-        return books.contains(book);
+    public boolean hasBorrowedBook(Book book) {
+        return this.borrowedBooks.contains(book);
     }
 
-    // Yeni Özellik: Okuyucunun kitaplarını listeleme
-    public void displayBooks() {
-        System.out.println(name + "'s Books:");
-        for (Book book : books) {
+    public boolean hasOwnedBook(Book book) {
+        return this.ownedBooks.contains(book);
+    }
+
+    public List<Book> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    public List<Book> getOwnedBooks() {
+        return ownedBooks;
+    }
+
+    public void displayBorrowedBooks() {
+        System.out.println(name + "'s Borrowed Books:");
+        for (Book book : borrowedBooks) {
+            book.display();
+        }
+    }
+
+    public void displayOwnedBooks() {
+        System.out.println(name + "'s Owned Books:");
+        for (Book book : ownedBooks) {
             book.display();
         }
     }
