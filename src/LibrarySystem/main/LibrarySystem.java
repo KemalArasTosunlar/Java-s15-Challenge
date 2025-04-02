@@ -5,47 +5,38 @@ import LibrarySystem.models.*;
 public class LibrarySystem {
     public static void main(String[] args) {
         Library library = new Library();
-        Librarian librarian = new Librarian("Alice", "securePass");
-        Reader reader = new Reader("Bob");
 
-        // Üye kaydı oluşturuluyor
-        MemberRecord member = new MemberRecord(reader, "General", "123 Main St", "555-1234", 3);
 
-        library.addMember(member); // Üye kütüphaneye ekleniyor
+// Öğrenci ve Öğretim Üyesi nesneleri oluşturuluyor
+        Student student1 = new Student("Ahmet Yılmaz", "2023101001", "Computer Engineering");
+        Faculty faculty1 = new Faculty("Ayşe Demir", "19780505", "Prof. Dr.");
 
-        Book book1 = new Book("The Lord of the Rings", "J.R.R. Tolkien", 30.00, "Available", "1st", "2020-01-15");
-        Book book2 = new Book("The Hobbit", "J.R.R. Tolkien", 25.00, "Available", "1st", "2018-05-20");
-        Book book3 = new Book("The Silmarillion", "J.R.R. Tolkien", 35.00, "Available", "1st", "2022-11-10");
+        // Üye kayıtları oluşturuluyor
+        MemberRecord studentMember = new MemberRecord(student1, "Student", "İstanbul", "555-1111", 5);
+        MemberRecord facultyMember = new MemberRecord(faculty1, "Faculty", "Ankara", "555-2222", 10);
+
+        // Üyeler kütüphaneye ekleniyor
+        library.addMember(studentMember);
+        library.addMember(facultyMember);
+
+        // Kitaplar oluşturuluyor
+        Book book1 = new Book("Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
+        Book book2 = new Book("Data Structures", "Jane Smith", 34.50, "Available", "2nd Edition", "2022-08-15");
         library.addBook(book1);
         library.addBook(book2);
-        library.addBook(book3);
 
-        System.out.println("\nAttempting to borrow books:");
-        librarian.issueBook(reader, book1, library);
-        librarian.issueBook(reader, book2, library);
-        librarian.issueBook(reader, book3, library);
+        // Kitap ödünç alma işlemleri
+        Librarian librarian = new Librarian("Alice", "securePass");
+        librarian.issueBook(student1, book1, library);
+        librarian.issueBook(faculty1, book2, library);
 
-        System.out.println("\nReader's borrowed books:");
-        reader.displayBorrowedBooks();
+        // Üye bilgilerini yazdırma (toString metodu ile)
+        System.out.println("\nStudent Member Record: " + studentMember);
+        System.out.println("Faculty Member Record: " + facultyMember);
 
-        System.out.println("\nAttempting to return a book:");
-        librarian.returnBook(reader, book1, library);
-
-        System.out.println("\nReader's borrowed books after return:");
-        reader.displayBorrowedBooks();
-
-        System.out.println("\nLibrary books after return:");
-        library.displayBooks();
-
-        System.out.println("\nAttempting to borrow a fourth book:");
-        Book book4 = new Book("The Fellowship of the Ring", "J.R.R. Tolkien", 40.00, "Available", "1st", "1954-07-29");
-        library.addBook(book4);
-        librarian.issueBook(reader, book4, library); // Limit aşılmaya çalışılıyor
-
-        System.out.println("\nReader's borrowed books after attempting to exceed limit:");
-        reader.displayBorrowedBooks();
-
-        System.out.println("\nLibrary books after attempting to exceed limit:");
-        library.displayBooks();
+        //Polymorphism örneği
+        student1.whoYouAre();
+        faculty1.whoYouAre();
     }
+
 }
