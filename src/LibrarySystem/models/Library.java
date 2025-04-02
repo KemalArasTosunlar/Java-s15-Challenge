@@ -14,85 +14,86 @@ public class Library {
         this.borrowedBooks = new HashMap<>();
     }
 
-    // Yeni Kitap Ekleme
+    // Yeni Kitap Ekleme (aynı kalır)
     public void addBook(Book book) {
         this.catalog.addBook(book);
     }
 
-    // Kütüphaneye Yeni Okuyucu Ekleme
+    // Kütüphaneye Yeni Okuyucu Ekleme (aynı kalır)
     public void addReader(Reader reader) {
         this.memberDatabase.addReader(reader);
     }
 
-    // Kitap Ödünç Verme
+    // Kitap Ödünç Verme (aynı kalır)
     public void lendBook(Reader reader, Book book) {
         if (isBookAvailable(book)) {
             this.catalog.removeBook(book);
             borrowedBooks.put(book, reader);
             reader.borrowBook(book);
-            System.out.println(reader.getName() + " kitabı ödünç aldı: " + book.getTitle());
+            System.out.println(reader.getName() + " kitabı ödünç aldı: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
         } else {
-            System.out.println("Kitap şu anda ödünç verilmiş veya mevcut değil!");
+            System.out.println("Kitap (ID: " + book.getBookID() + ") şu anda ödünç verilmiş veya mevcut değil!");
         }
     }
 
-    // Kitap Geri Teslim Etme
+    // Kitap Geri Teslim Etme (aynı kalır)
     public void returnBook(Reader reader, Book book) {
         if (borrowedBooks.containsKey(book) && borrowedBooks.get(book).equals(reader)) {
             reader.returnBook(book);
             this.catalog.addBook(book);
             borrowedBooks.remove(book);
-            System.out.println(reader.getName() + " kitabı iade etti: " + book.getTitle());
+            System.out.println(reader.getName() + " kitabı iade etti: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
         } else {
             System.out.println(reader.getName() + " bu kitabı ödünç almamış!");
         }
     }
 
-    // Belirli bir kitabın mevcut olup olmadığını kontrol et
+    // Belirli bir kitabın mevcut olup olmadığını kontrol et (aynı kalır)
     private boolean isBookAvailable(Book book) {
-        return this.catalog.searchBookByTitle(book.getTitle()) != null && !borrowedBooks.containsKey(book);
+        return this.catalog.searchBookById(book.getBookID()) != null && !borrowedBooks.containsKey(book);
     }
 
-    // İsme Göre Kitap Arama
+    // İsme Göre Kitap Arama (aynı kalır)
     public Book searchBookByTitle(String title) {
         return this.catalog.searchBookByTitle(title);
     }
 
-    // Yazara Göre Kitap Arama
+    // Yazara Göre Kitap Arama (aynı kalır)
     public List<Book> searchBooksByAuthor(String author) {
         return this.catalog.searchBooksByAuthor(author);
     }
 
-    // Kategoriye Göre Kitap Listeleme
+    // Kategoriye Göre Kitap Listeleme (aynı kalır)
     public void listBooksByCategory(String category) {
         this.catalog.listBooksByCategory(category);
     }
 
     // Kitap Güncelleme
-    public void updateBook(int bookId, String newTitle, String newAuthor, String newCategory) {
-        this.catalog.updateBook(bookId, newTitle, newAuthor, newCategory);
+    public void updateBook(int bookId, String newEdition, String newPurchaseDate, String newCategory) {
+        this.catalog.updateBook(bookId, newEdition, newPurchaseDate, newCategory);
     }
 
-    // Kitap Silme
+    // Kitap Silme (aynı kalır)
     public void deleteBook(int bookId) {
         this.catalog.deleteBook(bookId);
     }
 
-    // Kütüphanedeki Kitapları Listeleme
+    // Kütüphanedeki Kitapları Listeleme (aynı kalır)
     public void displayBooks() {
         this.catalog.displayBooks();
         System.out.println("Ödünçteki Kitaplar (" + borrowedBooks.size() + " adet):");
-        for (Book book : borrowedBooks.keySet()) {
-            book.display();
+        for (Map.Entry<Book, Reader> entry : borrowedBooks.entrySet()) {
+            entry.getKey().display();
+            System.out.println("  - Ödünç Alan: " + entry.getValue().getName());
         }
+    }
+
+    // ID'ye göre kitap arama (aynı kalır)
+    public Book searchBookById(int bookId) {
+        return this.catalog.searchBookById(bookId);
     }
 
     public Reader searchReaderByName(String name) {
         return this.memberDatabase.searchReaderByName(name);
     }
-
-    public Book searchBookById(int bookId) {
-        return this.catalog.getBookById(bookId);
-    }
-
 }

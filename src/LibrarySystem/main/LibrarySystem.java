@@ -10,8 +10,8 @@ public class LibrarySystem {
         Author author = new Author("John Doe");
 
 
-        Book book1 = new Book(1, "Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
-        Book book2 = new Book(2, "Python Basics", "Jane Smith", 19.99, "Available", "2nd Edition", "2022-05-15");
+        Book book1 = new Book("Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
+        Book book2 = new Book("Python Basics", "Jane Smith", 19.99, "Available", "2nd Edition", "2022-05-15");
         book1.setCategory("Programming");
         book2.setCategory("Programming");
 
@@ -20,39 +20,38 @@ public class LibrarySystem {
         library.addBook(book2);
         library.addReader(reader);
 
-        // Kitap Arama Testi
-        System.out.println("\nSearching for 'Java Programming':");
-        Book foundBook = library.searchBookByTitle("Java Programming");
-        if (foundBook != null) {
-            foundBook.display();
+        // Kitap Arama Testleri (aynı kalır)
+        System.out.println("\nSearching for 'Java Programming' by title:");
+        Book foundBookByTitle = library.searchBookByTitle("Java Programming");
+        if (foundBookByTitle != null) {
+            foundBookByTitle.display();
         } else {
             System.out.println("Book not found!");
         }
 
-        // Okuyucu kitap ödünç alıyor
-        librarian.issueBook(reader, book1, library); // Library nesnesini de geçiyoruz
+        System.out.println("\nSearching for book with ID: " + book1.getBookID() + " by ID:");
+        Book foundBookById = library.searchBookById(book1.getBookID());
+        if (foundBookById != null) {
+            foundBookById.display();
+        } else {
+            System.out.println("Book not found!");
+        }
 
-        // Okuyucunun kitaplarını listeleme
-        System.out.println("\nReader's Books After Borrowing:");
-        reader.displayBorrowedBooks(); // displayBooks yerine displayBorrowedBooks kullanacağız
+        // Kitap Güncelleme Testi
+        System.out.println("\nUpdating book with ID: " + book1.getBookID());
+        library.updateBook(book1.getBookID(), "2nd Edition", "2023-05-10", "Advanced Programming");
 
-        // Kütüphanedeki kitapları listeleme
-        System.out.println("\nLibrary Books After Lending:");
+        Book updatedBook = library.searchBookById(book1.getBookID());
+        if (updatedBook != null) {
+            updatedBook.display();
+        }
+
+        // Kitap Silme Testi
+        System.out.println("\nDeleting book with ID: " + book2.getBookID());
+        library.deleteBook(book2.getBookID());
+
+        System.out.println("\nLibrary Books After Deletion:");
         library.displayBooks();
-
-        // Okuyucu kitabı iade ediyor
-        librarian.returnBook(reader, book1, library); // Library nesnesini de geçiyoruz
-
-        // Kütüphanedeki kitapları tekrar listeleme
-        System.out.println("\nLibrary Books After Returning:");
-        library.displayBooks();
-
-        // Okuyucu kitap satın alıyor
-        reader.purchaseBook(book2);
-
-        // Okuyucunun kitaplarını tekrar listeleme
-        System.out.println("\nReader's Books After Purchasing:");
-        reader.displayOwnedBooks(); // displayBooks yerine displayOwnedBooks kullanacağız
     }
 
 }
