@@ -14,7 +14,7 @@ public class Catalog {
 
     public void addBook(Book book) {
         books.add(book);
-        System.out.println("Kataloğa kitap eklendi: " + book.getTitle() + " (ID: " + book.getBookID() + ")");
+        System.out.println("Kataloğa kitap eklendi: " + book.getTitle() + " (ID: " + book.getBookID() + ") | Kategori: " + book.getCategory());
     }
 
     public Book searchBookByTitle(String title) {
@@ -36,16 +36,16 @@ public class Catalog {
         return foundBooks;
     }
 
-    public void listBooksByCategory(String category) {
-        System.out.println(category + " kategorisindeki kitaplar:");
+    public void listBooksByCategory(String categoryName) {
+        System.out.println(categoryName + " kategorisindeki kitaplar:");
         for (Book book : books) {
-            if (book.getCategory() != null && book.getCategory().equalsIgnoreCase(category)) {
+            if (book.getCategory() != null && book.getCategory().getName().equalsIgnoreCase(categoryName)) {
                 System.out.println(book.getTitle() + " (ID: " + book.getBookID() + ") - " + book.getAuthor());
             }
         }
     }
 
-    public void updateBook(int bookId, String newEdition, String newPurchaseDate, String newCategory) {
+    public void updateBook(int bookId, String newEdition, String newPurchaseDate, String newCategoryName) {
         for (Book book : books) {
             if (book.getBookID() == bookId) {
                 if (newEdition != null && !newEdition.isEmpty()) {
@@ -54,10 +54,10 @@ public class Catalog {
                 if (newPurchaseDate != null && !newPurchaseDate.isEmpty()) {
                     book.setDateOfPurchase(newPurchaseDate);
                 }
-                if (newCategory != null && !newCategory.isEmpty()) {
-                    book.setCategory(newCategory);
+                if (newCategoryName != null && !newCategoryName.isEmpty()) {
+                    book.setCategory(newCategoryName);
                 }
-                System.out.println("Kitap (ID: " + bookId + ") bilgileri güncellendi: " + book.getTitle());
+                System.out.println("Kitap (ID: " + bookId + ") bilgileri güncellendi: " + book.getTitle() + " | Kategori: " + book.getCategory());
                 book.display();
                 return;
             }
@@ -71,7 +71,7 @@ public class Catalog {
             Book book = iterator.next();
             if (book.getBookID() == bookId) {
                 iterator.remove();
-                System.out.println("Kitap (ID: " + bookId + ") silindi: " + book.getTitle());
+                System.out.println("Kitap (ID: " + bookId + ") silindi: " + book.getTitle() + " | Kategori: " + book.getCategory());
                 return;
             }
         }

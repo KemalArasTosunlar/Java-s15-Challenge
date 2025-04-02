@@ -20,10 +20,9 @@ public class Book {
         this.status = status;
         this.edition = edition;
         this.dateOfPurchase = dateOfPurchase;
-        this.category = null; // Başlangıçta kategori null olabilir
+        this.category = null;
     }
 
-    // Getter metotları (aynı kalır)
     public int getBookID() {
         return bookID;
     }
@@ -60,27 +59,21 @@ public class Book {
         this.dateOfPurchase = dateOfPurchase;
     }
 
-    public String getCategory() {
-        return category != null ? category.getName() : null;
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(String newCategoryName) {
-        if (this.category == null) {
-            this.category = new Category(newCategoryName);
-        } else {
-            this.category.setName(newCategoryName);
-        }
+        this.category = new Category(newCategoryName);
     }
 
-    // display metodu (aynı kalır)
     public void display() {
         System.out.println("Book ID: " + bookID + " | Book: " + name + " by " + author +
                 " | Status: " + status + " | Edition: " + edition +
                 " | Purchase Date: " + dateOfPurchase +
-                (category != null ? " | Category: " + category.getName() : ""));
+                (category != null ? " | Category: " + category : "")); // toString metodu kullanılır
     }
 
-    // setTitle ve setAuthor metotları (aynı kalır, exception fırlatır)
     public void setTitle(String newTitle) {
         throw new UnsupportedOperationException("Book title cannot be changed after creation.");
     }

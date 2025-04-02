@@ -37,7 +37,7 @@ public class LibrarySystem {
             System.out.println("Book not found!");
         }
 
-        // Kitap Güncelleme Testi
+        // Kitap Güncelleme Testi (kategori de güncelleniyor)
         System.out.println("\nUpdating book with ID: " + book1.getBookID());
         library.updateBook(book1.getBookID(), "2nd Edition", "2023-05-10", "Advanced Programming");
 
@@ -46,7 +46,14 @@ public class LibrarySystem {
             updatedBook.display();
         }
 
-        // Kitap Silme Testi
+        // Kategoriye göre kitap listeleme
+        System.out.println("\nBooks in 'Programming' category:");
+        library.listBooksByCategory("Programming");
+
+        System.out.println("\nBooks in 'Advanced Programming' category:");
+        library.listBooksByCategory("Advanced Programming");
+
+        // Kitap Silme Testi (aynı kalır)
         System.out.println("\nDeleting book with ID: " + book2.getBookID());
         library.deleteBook(book2.getBookID());
 
