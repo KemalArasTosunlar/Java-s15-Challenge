@@ -1,19 +1,16 @@
 package LibrarySystem.models;
 
 public class Book {
-    private final int bookID; // ID artık sadece constructor'da atanacak
+    private final int bookID;
+    private Author author; // Yazar artık bir Author nesnesi
     private final String name;
-    private final String author;
     private String status;
     private String edition;
     private String dateOfPurchase;
     private Category category;
-    private static int nextBookID = 1; // Statik sayaç
+    private static int nextBookID = 1;
 
-
-// Constructor (aynı kalır)
-
-    public Book(String name, String author, double price, String status, String edition, String dateOfPurchase) {
+    public Book(String name, Author author, double price, String status, String edition, String dateOfPurchase) {
         this.bookID = nextBookID++;
         this.name = name;
         this.author = author;
@@ -31,7 +28,7 @@ public class Book {
         return name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
@@ -64,22 +61,26 @@ public class Book {
     }
 
     public void setCategory(String newCategoryName) {
-        this.category = new Category(newCategoryName);
+        if (this.category == null) {
+            this.category = new Category(newCategoryName);
+        } else {
+            this.category.setName(newCategoryName);
+        }
     }
 
     public void display() {
-        System.out.println("Book ID: " + bookID + " | Book: " + name + " by " + author +
+        System.out.println("Book ID: " + bookID + " | Book: " + name + " by " + author.getName() +
                 " | Status: " + status + " | Edition: " + edition +
                 " | Purchase Date: " + dateOfPurchase +
-                (category != null ? " | Category: " + category : "")); // toString metodu kullanılır
+                (category != null ? " | Category: " + category : ""));
     }
 
     public void setTitle(String newTitle) {
         throw new UnsupportedOperationException("Book title cannot be changed after creation.");
     }
 
-    public void setAuthor(String newAuthor) {
-        throw new UnsupportedOperationException("Book author cannot be changed after creation.");
+    public void setAuthor(Author newAuthor) {
+        this.author = newAuthor;
     }
 
     public void changeOwner(String name) {

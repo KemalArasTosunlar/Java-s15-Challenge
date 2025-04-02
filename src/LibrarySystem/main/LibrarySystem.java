@@ -6,37 +6,38 @@ public class LibrarySystem {
     public static void main(String[] args) {
         Library library = new Library();
 
+        // Yazarlar oluşturuluyor
+        Author tolkien = new Author("J.R.R. Tolkien", "English writer, poet, philologist, and academic");
+        Author rowling = new Author("J.K. Rowling", "British novelist, philanthropist, film producer, and screenwriter");
 
-// Öğrenci ve Öğretim Üyesi nesneleri oluşturuluyor
-        Student student1 = new Student("Ahmet Yılmaz", "2023101001", "Computer Engineering");
-        Faculty faculty1 = new Faculty("Ayşe Demir", "19780505", "Prof. Dr.");
+        // Kitaplar oluşturuluyor (Yazar nesneleri kullanılarak)
+        Book book1 = new Book("The Lord of the Rings", tolkien, 30.00, "Available", "1st", "2020-01-15");
+        Book book2 = new Book("Harry Potter and the Sorcerer's Stone", rowling, 25.00, "Available", "1st", "1997-06-26");
 
-        // Üye kayıtları oluşturuluyor
-        MemberRecord studentMember = new MemberRecord(student1, "Student", "İstanbul", "555-1111", 5);
-        MemberRecord facultyMember = new MemberRecord(faculty1, "Faculty", "Ankara", "555-2222", 10);
-
-        // Üyeler kütüphaneye ekleniyor
-        library.addMember(studentMember);
-        library.addMember(facultyMember);
-
-        // Kitaplar oluşturuluyor
-        Book book1 = new Book("Java Programming", "John Doe", 29.99, "Available", "1st Edition", "2023-01-01");
-        Book book2 = new Book("Data Structures", "Jane Smith", 34.50, "Available", "2nd Edition", "2022-08-15");
         library.addBook(book1);
         library.addBook(book2);
 
-        // Kitap ödünç alma işlemleri
+        // Öğrenci oluşturuluyor
+        Student student1 = new Student("Ahmet Yılmaz", "2023101001", "Computer Engineering");
+
+        // Üye kaydı oluşturuluyor
+        MemberRecord studentMember = new MemberRecord(student1, "Student", "İstanbul", "555-1111", 5);
+
+        // Üye kütüphaneye ekleniyor
+        library.addMember(studentMember);
+
+        // Kitap ödünç alma işlemi
         Librarian librarian = new Librarian("Alice", "securePass");
         librarian.issueBook(student1, book1, library);
-        librarian.issueBook(faculty1, book2, library);
 
-        // Üye bilgilerini yazdırma (toString metodu ile)
-        System.out.println("\nStudent Member Record: " + studentMember);
-        System.out.println("Faculty Member Record: " + facultyMember);
+        // Kitapları listeleme
+        System.out.println("\nLibrary Books:");
+        library.displayBooks();
 
-        //Polymorphism örneği
-        student1.whoYouAre();
-        faculty1.whoYouAre();
+        // Yazarları listeleme
+        System.out.println("\nUnique Authors in the Library:");
+        library.getCatalog().getBooks().stream().map(Book::getAuthor).distinct().forEach(author -> System.out.println("- " + author.getName()));
+
+
     }
-
 }

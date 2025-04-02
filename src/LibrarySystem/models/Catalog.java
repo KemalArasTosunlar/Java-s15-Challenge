@@ -11,6 +11,9 @@ public class Catalog {
     public Catalog() {
         this.books = new ArrayList<>();
     }
+    public List<Book> getBooks() {
+        return books;
+    }
 
     public void addBook(Book book) {
         books.add(book);
@@ -26,10 +29,10 @@ public class Catalog {
         return null;
     }
 
-    public List<Book> searchBooksByAuthor(String author) {
+    public List<Book> searchBooksByAuthor(Author author) {
         List<Book> foundBooks = new ArrayList<>();
         for (Book book : books) {
-            if (book.getAuthor().equalsIgnoreCase(author)) {
+            if (book.getAuthor().equals(author)) {
                 foundBooks.add(book);
             }
         }

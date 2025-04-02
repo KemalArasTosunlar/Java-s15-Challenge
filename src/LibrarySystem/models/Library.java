@@ -71,7 +71,7 @@ public class Library {
     }
 
     // Yazara Göre Kitap Arama
-    public List<Book> searchBooksByAuthor(String author) {
+    public List<Book> searchBooksByAuthor(Author author) {
         return this.catalog.searchBooksByAuthor(author);
     }
 
