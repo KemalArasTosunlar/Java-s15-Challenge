@@ -106,4 +106,10 @@ public class Catalog {
         }
         return null;
     }
+
+    public List<Book> displayAllBooksForUniqueAuthor() {
+        return new ArrayList<>(this.books);
+    }
+
+
 }

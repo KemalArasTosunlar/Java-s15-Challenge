@@ -96,4 +96,23 @@ public class Library {
     public Reader searchReaderByName(String name) {
         return this.memberDatabase.searchReaderByName(name);
     }
+    public void listUniqueAuthors() {
+        Set<String> authors = new HashSet<>();
+        for (Book book : catalog.displayAllBooksForUniqueAuthor()) { // Catalog'dan tüm kitapları alıyoruz
+            authors.add(book.getAuthor());
+        }
+
+        System.out.println("\nKütüphanedeki Benzersiz Yazarlar:");
+        if (authors.isEmpty()) {
+            System.out.println("Kütüphanede henüz kitap bulunmamaktadır.");
+            return;
+        }
+        for (String author : authors) {
+            System.out.println("- " + author);
+        }
+    }
+
+    public Catalog getCatalog() {
+        return catalog;
+    }
 }
